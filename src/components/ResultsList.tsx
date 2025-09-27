@@ -20,7 +20,7 @@ const ResultsList = ({ results, loading }: { results: SearchResults; loading: bo
         <ul className="w-full space-y-4">
           {results.map((result) => (
             <li key={result.uid} className="flex justify-between items-center text-gray-300">
-              <span>{result.name}</span>
+              <span className="text-left flex-1">{result.name}</span>
               <button
                 className="px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition-all duration-300"
               >
