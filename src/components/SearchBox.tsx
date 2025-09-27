@@ -67,12 +67,12 @@ const SearchBox: React.FC<SearchBoxProps> = ({ searchType, onSearchTypeChange, q
 
         <button
           type="submit"
-          disabled={!query.trim()}
+          disabled={!query.trim() || loading}
           className={`w-full py-3 font-semibold rounded-xl shadow-lg transition-all duration-300 transform hover:scale-105 ${
             !query.trim() ? 'bg-gray-600 text-gray-400 cursor-not-allowed' : 'bg-blue-600 text-white hover:bg-blue-700'
           }`}
         >
-          SEARCH
+          {loading ? 'Searching...' : 'SEARCH'}
         </button>
       </form>
     </div>

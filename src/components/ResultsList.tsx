@@ -2,7 +2,16 @@
 
 import { type SearchResults } from "@/lib/sw_api";
 
-const ResultsList = ({ results }: { results: SearchResults }) => {
+const ResultsList = ({ results, loading }: { results: SearchResults; loading: boolean }) => {
+  if (loading) {
+    return (
+      <div className="bg-gray-800 p-8 min-h-[515px] rounded-3xl shadow-2xl flex-1 border border-gray-700 flex flex-col items-center justify-start">
+        <h2 className="text-xl font-bold w-full pb-4 mb-4 text-gray-100 border-b border-gray-600">Results</h2>
+        <p className="text-lg text-gray-500 self-center text-center grow">Searching...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="bg-gray-800 p-8 rounded-3xl shadow-2xl flex-1 border border-gray-700 flex flex-col items-center justify-center">
       <h2 className="text-xl font-bold w-full pb-4 mb-4 text-gray-100 border-b border-gray-600">Results</h2>

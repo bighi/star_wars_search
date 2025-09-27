@@ -10,11 +10,14 @@ export default function Home() {
   const [searchType, setSearchType] = useState<SearchType>('people');
   const [query, setQuery] = useState('');
   const [searchResults, setSearchResults] = useState<SearchResults>([]);
+  const [loading, setLoading] = useState(false);
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     const searchResults = await Api.search(searchType, query);
     setSearchResults(searchResults);
+    setLoading(false);
   };
 
   return (
@@ -31,8 +34,9 @@ export default function Home() {
             query={query}
             onQueryChange={(e) => setQuery(e.target.value)}
             onSearch={handleSearch}
+            loading={loading}
           />
-          <ResultsList results={searchResults} />
+          <ResultsList results={searchResults} loading={loading} />
         </div>
       </div>
     </>
