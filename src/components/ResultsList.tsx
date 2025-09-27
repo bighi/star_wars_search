@@ -1,8 +1,8 @@
 'use client';
 
-import { type SearchResults as SearchResultsType } from "@/lib/sw_api";
+import { type SearchResults } from "@/lib/sw_api";
 
-const SearchResults = ({ results }: { results: SearchResultsType }) => {
+const ResultsList = ({ results }: { results: SearchResults }) => {
   return (
     <div className="bg-gray-800 p-8 rounded-3xl shadow-2xl flex-1 border border-gray-700 flex flex-col items-center justify-center">
       <h2 className="text-xl font-bold w-full pb-4 mb-4 text-gray-100 border-b border-gray-600">Results</h2>
@@ -37,4 +37,4 @@ const SearchResults = ({ results }: { results: SearchResultsType }) => {
   );
 };
 
-export default SearchResults;
+export default ResultsList;
