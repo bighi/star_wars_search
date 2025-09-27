@@ -1,8 +1,19 @@
 'use client';
 
-const SearchBox = ({ searchType, onSearchTypeChange, query, onQueryChange, onSearch }) => {
+import { type SearchType } from "@/lib/sw_api";
+
+interface SearchBoxProps {
+  searchType: SearchType;
+  onSearchTypeChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  query: string;
+  onQueryChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onSearch: (e: React.FormEvent<HTMLFormElement>) => void;
+  loading: boolean;
+}
+
+const SearchBox: React.FC<SearchBoxProps> = ({ searchType, onSearchTypeChange, query, onQueryChange, onSearch, loading }) => {
   return (
-    <div className="bg-gray-800 p-8 rounded-3xl shadow-2xl flex-1 border border-gray-700">
+    <div className="bg-gray-800 p-8 h-[300px] rounded-3xl shadow-2xl flex-1 border border-gray-700">
       <h2 className="text-xl font-bold mb-6 text-gray-100">What are you searching for?</h2>
 
       <form onSubmit={onSearch} className="space-y-6">
