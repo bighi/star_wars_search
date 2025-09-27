@@ -13,21 +13,24 @@ const ResultsList = ({ results, loading }: { results: SearchResults; loading: bo
   }
 
   return (
-    <div className="bg-gray-800 p-8 rounded-3xl shadow-2xl flex-1 border border-gray-700 flex flex-col items-center justify-center">
+    <div className="bg-gray-800 p-8 min-h-[515px] rounded-3xl shadow-2xl flex-1 border border-gray-700 flex flex-col items-center justify-start">
       <h2 className="text-xl font-bold w-full pb-4 mb-4 text-gray-100 border-b border-gray-600">Results</h2>
 
       {results.length > 0 ? (
         <ul className="w-full space-y-4">
           {results.map((result) => (
-            <li key={result.uid} className="text-gray-300">
-              <a href={result.url} target="_blank" rel="noopener noreferrer" className="hover:underline">
-                {result.name}
-              </a>
+            <li key={result.uid} className="flex justify-between items-center text-gray-300">
+              <span>{result.name}</span>
+              <button
+                className="px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition-all duration-300"
+              >
+                See details
+              </button>
             </li>
           ))}
         </ul>
       ) : (
-        <div className="text-center text-gray-500 mt-8">
+        <div className="text-center self-center text-gray-500 mt-8">
           <svg
             className="w-16 h-16 mx-auto mb-4"
             fill="none"
