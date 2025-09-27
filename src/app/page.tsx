@@ -14,7 +14,7 @@ export default function Home() {
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     const searchResults = await Api.search(searchType, query);
-    setSearchResults(searchResults); // Store the search results in state
+    setSearchResults(searchResults);
   };
 
   return (

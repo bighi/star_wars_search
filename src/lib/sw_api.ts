@@ -8,8 +8,6 @@ type SearchResult = {
 
 type SearchResults = SearchResult[];
 
-export type { SearchResult, SearchResults };
-
 const Api = {
   search: async (searchType: SearchType, query: string): Promise<SearchResults> => {
     try {
@@ -32,4 +30,4 @@ const Api = {
 };
 
 export default Api;
-export type { SearchType };
+export type { SearchType, SearchResult, SearchResults }
