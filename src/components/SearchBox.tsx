@@ -5,7 +5,7 @@ const SearchBox = ({ searchType, onSearchTypeChange, query, onQueryChange, onSea
     <div className="bg-gray-800 p-8 rounded-3xl shadow-2xl flex-1 border border-gray-700">
       <h2 className="text-xl font-bold mb-6 text-gray-100">What are you searching for?</h2>
 
-      <form className="space-y-6">
+      <form onSubmit={onSearch} className="space-y-6">
         <div className="flex items-center gap-6">
           <label className="flex items-center cursor-pointer">
             <input
@@ -55,7 +55,7 @@ const SearchBox = ({ searchType, onSearchTypeChange, query, onQueryChange, onSea
         />
 
         <button
-          onClick={onSearch}
+          type="submit"
           className="w-full py-3 bg-blue-600 text-white font-semibold rounded-xl shadow-lg hover:bg-blue-700 transition-all duration-300 transform hover:scale-105"
         >
           SEARCH
