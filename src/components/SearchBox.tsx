@@ -48,7 +48,7 @@ const SearchBox = ({ searchType, onSearchTypeChange, query, onQueryChange, onSea
 
         <input
           type="text"
-          placeholder="e.g. Chewbacca, Yoda, Boba Fett"
+          placeholder={searchType === "people" ? "e.g. Chewbacca, Yoda, Boba Fett" : "e.g. Empire Strikes Back, A New Hope"}
           value={query}
           onChange={onQueryChange}
           className="w-full px-4 py-3 rounded-xl bg-gray-700 text-gray-100 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300 placeholder-gray-400"
