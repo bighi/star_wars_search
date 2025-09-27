@@ -56,13 +56,16 @@ const SearchBox = ({ searchType, onSearchTypeChange, query, onQueryChange, onSea
 
         <button
           type="submit"
-          className="w-full py-3 bg-blue-600 text-white font-semibold rounded-xl shadow-lg hover:bg-blue-700 transition-all duration-300 transform hover:scale-105"
+          disabled={!query.trim()}
+          className={`w-full py-3 font-semibold rounded-xl shadow-lg transition-all duration-300 transform hover:scale-105 ${
+            !query.trim() ? 'bg-gray-600 text-gray-400 cursor-not-allowed' : 'bg-blue-600 text-white hover:bg-blue-700'
+          }`}
         >
           SEARCH
         </button>
       </form>
     </div>
   );
-}
+};
 
 export default SearchBox;
