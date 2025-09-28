@@ -20,7 +20,8 @@ type Person = {
     eye_color: string;
     birth_year: string;
     homeworld: string;
-    films: Array<string | { id: string; name: string }>; // Allow both URLs and transformed objects
+    films: string[];
+    films_details?: Array<Movie>;
     url: string;
   };
 };
@@ -29,96 +30,82 @@ type Movie = {
   uid: string;
   properties: {
     title: string;
-    episode_id: number;
+    // episode_id: number;
     opening_crawl: string;
-    director: string;
-    producer: string;
-    release_date: string;
+    // director: string;
+    // producer: string;
+    // release_date: string;
     characters: string[];
-    planets: string[];
-    starships: string[];
-    vehicles: string[];
-    species: string[];
+    character_details?: Array<any>; // Optional property to store character details
+    // planets: string[];
+    // starships: string[];
+    // vehicles: string[];
+    // species: string[];
     url: string;
   };
 };
 
 const Api = {
+  personUrl: (id: string): string => {
+    return `https://swapi.tech/api/people/${id}`;
+  },
+
+  movieUrl: (id: string): string => {
+    return `https://swapi.tech/api/films/${id}`;
+  },
+
+  // Generalized fetch function, responsible for making API calls
+  // and checking for errors.
+  fetch: async (url: string): Promise<any> => {
+    try {
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error(`Error fetching data from ${url}:`, error);
+      throw error;
+    }
+  },
+
   search: async (searchType: SearchType, query: string): Promise<SearchResults> => {
-    try {
-      const endpoint = searchType === "people" ? "https://swapi.tech/api/people/" : "https://swapi.tech/api/films/";
-      const response = await fetch(`${endpoint}?search=${encodeURIComponent(query)}`);
-      console.log("Fetching from:", `${endpoint}?search=${encodeURIComponent(query)}`);
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      return data.results as SearchResults;
-
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      throw error;
-    }
+    const endpoint = `https://swapi.tech/api/${searchType}/?search=${query}`;
+    const data = await Api.fetch(endpoint);
+    return data.results as SearchResults;
   },
 
-  getPerson: async (id: string): Promise<Person> => {
-    try {
-      const endpoint = `https://swapi.tech/api/people/${id}`;
-      const response = await fetch(endpoint);
+  getPerson: async (url: string, includeMovies: boolean = false): Promise<Person> => {
+    const data = await Api.fetch(url);
+    const person = data.result as Person;
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      const person = data.result as Person; // Assuming the API returns a 'result' field with the person data
-
-      // Fetch movie details for each film URL
-      const filmDetails = await Promise.all(
-        person.properties.films
-          .filter((filmUrl): filmUrl is string => typeof filmUrl === "string") // Ensure only strings are passed
-          .map(async (filmUrl) => {
-            const filmResponse = await fetch(filmUrl);
-
-            if (!filmResponse.ok) {
-              throw new Error(`HTTP error! status: ${filmResponse.status}`);
-            }
-
-            const filmData = await filmResponse.json();
-            return {
-              id: filmData.result.uid, // Assuming 'uid' is the movie ID
-              name: filmData.result.properties.title, // Assuming 'title' is the movie name
-            };
-          })
+    if (includeMovies) {
+      person.properties.films_details = await Promise.all(
+        person.properties.films.map(async (filmUrl) => {
+          return await Api.getMovie(filmUrl);
+        })
       );
-
-      // Update the films property with the transformed data
-      person.properties.films = filmDetails;
-
-      return person;
-    } catch (error) {
-      console.error("Error fetching person data:", error);
-      throw error;
     }
+
+    return person;
   },
 
-  getMovie: async (id: string): Promise<Movie> => {
-    try {
-      const endpoint = `https://swapi.tech/api/films/${id}`;
-      const response = await fetch(endpoint);
+  getMovie: async (url: string, getPeople: boolean = false): Promise<Movie> => {
+    const data = await Api.fetch(url);
+    const movie = data.result as Movie;
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      return data.result as Movie; // Assuming the API returns a 'result' field with the movie data
-    } catch (error) {
-      console.error("Error fetching movie data:", error);
-      throw error;
+    if (getPeople) {
+      movie.properties.character_details = await Promise.all(
+        movie.properties.characters.map(async (characterUrl) => {
+          return await Api.getPerson(characterUrl, false);
+        })
+      );
     }
+
+    return movie;
   },
 };
 
