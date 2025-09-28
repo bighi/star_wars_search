@@ -1,14 +1,9 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Montserrat } from "next/font/google";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
   subsets: ["latin"],
 });
 
@@ -24,10 +19,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+      <body>
+        <nav className="w-full py-[7px] bg-white flex justify-center shadow-md">
+          <h1 className={`${montserrat.variable} antialiased text-[9px] font-bold text-green-teal`}>Star Wars Search</h1>
+        </nav>
+        <main className="flex flex=col p-[15px] justify-center bg-[#ededed]">
+          {children}
+        </main>
       </body>
     </html>
   );
