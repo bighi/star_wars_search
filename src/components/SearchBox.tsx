@@ -1,6 +1,7 @@
 'use client';
 
 import { type SearchType } from "@/lib/sw_api";
+import BasicBox from "./BasicBox"
 
 interface SearchBoxProps {
   searchType: SearchType;
@@ -16,10 +17,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({ searchType, onSearchTypeChange, q
   const buttonEnabled = query.trim().length > 0 && !loading;
 
   return (
-    <div
-      className="bg-white p-8 flex flex-col gap-[20px] flex-1 border rounded-sm text-[14px]"
-      style={{ boxShadow: '0 1px 2px 0 var(--gray-warm)' }}
-    >
+    <BasicBox>
       <h2>What are you searching for?</h2>
 
       <form onSubmit={onSearch} className="space-y-6">
@@ -65,7 +63,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({ searchType, onSearchTypeChange, q
           {loading ? 'Searching...' : 'SEARCH'}
         </button>
       </form>
-    </div>
+    </BasicBox>
   );
 };
 
