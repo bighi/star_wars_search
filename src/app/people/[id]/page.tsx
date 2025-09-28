@@ -5,7 +5,7 @@ export default async function PersonPage({ params }: { params: { id: string } })
   const { id } = params;
 
   try {
-    const person: Person = await Api.getPerson(id);
+    const person: Person = await Api.getPerson(Api.personUrl(id));
 
     return (
       <section className="rounded-md shadow-md p-[15px] w-[800px] flex flex-col items-center">
