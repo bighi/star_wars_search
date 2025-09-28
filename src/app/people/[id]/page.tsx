@@ -5,7 +5,7 @@ export default async function PersonPage({ params }: { params: { id: string } })
   const { id } = params;
 
   try {
-    const person: Person = await Api.getPerson(Api.personUrl(id));
+    const person: Person = await Api.getPerson(Api.personUrl(id), true);
 
     return (
       <section className="rounded-md shadow-md p-[15px] w-[800px] flex flex-col items-center">
@@ -26,15 +26,13 @@ export default async function PersonPage({ params }: { params: { id: string } })
           <div className="w-1/2 pl-4">
             <h2 className="text-xl font-semibold mb-2">Movies</h2>
             <ul className="list-disc pl-5">
-              {person.properties.films
-                .filter((film): film is { id: string; name: string } => typeof film !== "string")
-                .map((film) => (
-                  <li key={film.id}>
-                    <a href={`/film/${film.id}`} className="text-blue-500 hover:underline">
-                      {film.name}
-                    </a>
-                  </li>
-                ))}
+              {person.properties.films_details?.map((film) => (
+                <li key={film.uid}>
+                  <a href={`/film/${film.uid}`} className="text-blue-500 hover:underline">
+                    {film.properties.title}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
