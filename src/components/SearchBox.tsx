@@ -2,6 +2,7 @@
 
 import { type SearchType } from "@/lib/sw_api";
 import BasicBox from "./BasicBox"
+import Button from "./Button";
 
 interface SearchBoxProps {
   searchType: SearchType;
@@ -13,9 +14,6 @@ interface SearchBoxProps {
 }
 
 const SearchBox: React.FC<SearchBoxProps> = ({ searchType, onSearchTypeChange, query, onQueryChange, onSearch, loading }) => {
-
-  const buttonEnabled = query.trim().length > 0 && !loading;
-
   return (
     <BasicBox>
       <h2>What are you searching for?</h2>
@@ -53,15 +51,14 @@ const SearchBox: React.FC<SearchBoxProps> = ({ searchType, onSearchTypeChange, q
           className="w-full rounded-xs p-[10px] border border-gray-soft focus:outline-none focus:border-[#383838] transition-all duration-300"
         />
 
-        <button
+        <Button
           type="submit"
-          disabled={!buttonEnabled}
-          className={`w-full font-bold rounded-[20px] p-[8px] bg-gray-pinkish text-white text-bold transition-all duration-300 transform hover:scale-105 ${
-            buttonEnabled ? 'bg-green-teal cursor-pointer' : 'cursor-not-allowed'
-          }`}
+          disabled={query.trim().length === 0}
+          loading={loading}
+          loadingText="Searching..."
         >
-          {loading ? 'Searching...' : 'SEARCH'}
-        </button>
+          SEARCH
+        </Button>
       </form>
     </BasicBox>
   );
