@@ -3,7 +3,6 @@ import "./globals.css";
 import { Montserrat } from "next/font/google";
 
 const montserrat = Montserrat({
-  variable: "--font-montserrat",
   subsets: ["latin"],
 });
 
@@ -19,11 +18,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
-        <nav className="w-full py-[7px] bg-white flex justify-center shadow-md">
-          <h1 className={`${montserrat.variable} antialiased text-[9px] font-bold text-green-teal`}>Star Wars Search</h1>
+      <body className={`min-h-screen flex flex-col ${montserrat.className}`}>
+        <nav className="w-full py-[14px] bg-white flex justify-center items-center shadow-[0 1px 0 0 #dadada]">
+          <h1 className="antialiased text-[18px] font-bold text-green-teal align-center">
+            Star Wars Search
+          </h1>
         </nav>
-        <main className="flex flex=col p-[15px] justify-center bg-[#ededed]">
+        <main className="flex flex-row flex-1 p-[30px] justify-center bg-[#ededed] text-black">
           {children}
         </main>
       </body>

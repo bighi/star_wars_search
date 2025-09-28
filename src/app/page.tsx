@@ -26,18 +26,17 @@ export default function Home() {
         <title>Star Wars Search</title>
       </Head>
 
-      <div className="flex justify-center items-center min-h-screen p-4 bg-gray-900 text-gray-200 font-sans">
-        <div className="flex flex-col md:flex-row gap-8 w-full max-w-4xl">
-          <SearchBox
-            searchType={searchType}
-            onSearchTypeChange={(e) => setSearchType(e.target.value as SearchType)}
-            query={query}
-            onQueryChange={(e) => setQuery(e.target.value)}
-            onSearch={handleSearch}
-            loading={loading}
-          />
-          <ResultsList results={searchResults} loading={loading} searchType={searchType} />
-        </div>
+      <div className="flex flex-col md:flex-row gap-[30px] items-start w-full max-w-4xl bg-[#ededed]">
+        <SearchBox
+          searchType={searchType}
+          onSearchTypeChange={(e) => setSearchType(e.target.value as SearchType)}
+          query={query}
+          onQueryChange={(e) => setQuery(e.target.value)}
+          onSearch={handleSearch}
+          loading={loading}
+        />
+
+        <ResultsList results={searchResults} loading={loading} searchType={searchType} />
       </div>
     </>
   );

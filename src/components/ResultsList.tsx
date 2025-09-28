@@ -8,25 +8,28 @@ const ResultsList = ({ results, loading, searchType }: { results: SearchResults;
 
   if (loading) {
     return (
-      <div className="bg-gray-800 p-8 min-h-[515px] rounded-3xl shadow-2xl flex-1 border border-gray-700 flex flex-col items-center justify-start">
-        <h2 className="text-xl font-bold w-full pb-4 mb-4 text-gray-100 border-b border-gray-600">Results</h2>
-        <p className="text-lg text-gray-500 self-center text-center grow">Searching...</p>
+      <div className="p-8 min-h-[515px] flex-1 border border-gray-700 flex flex-col items-center justify-start">
+        <h2 className="text-xl font-bold w-full pb-4 mb-4 border-b border-gray-600">Results</h2>
+        <p className="text-lg self-center text-center grow">Searching...</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-gray-800 p-8 min-h-[515px] rounded-3xl shadow-2xl flex-1 border border-gray-700 flex flex-col items-center justify-start">
-      <h2 className="text-xl font-bold w-full pb-4 mb-4 text-gray-100 border-b border-gray-600">Results</h2>
+    <div
+      className="p-8 min-h-[515px] rounded-sm flex flex-1 bg-white border flex flex-col items-center justify-start"
+      style={{ boxShadow: '0 1px 2px 0 var(--gray-warm)' }}
+    >
+      <h2 className="text-xl font-bold text-[18px] w-full pb-[10px] border-b-[0.5px]">Results</h2>
 
       {results.length > 0 ? (
         <ul className="w-full space-y-4">
           {results.map((result) => (
-            <li key={result.uid} className="flex justify-between items-center text-gray-300">
+            <li key={result.uid} className="flex justify-between items-center">
               <span className="text-left flex-1">{result.name}</span>
               <button
                 onClick={() => router.push(`/${searchType}/${result.uid}`)}
-                className="px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition-all duration-300"
+                className="px-4 py-2 font-semibold transition-all duration-300"
               >
                 See details
               </button>
@@ -34,19 +37,9 @@ const ResultsList = ({ results, loading, searchType }: { results: SearchResults;
           ))}
         </ul>
       ) : (
-        <div className="text-center self-center text-gray-500 mt-8">
-          <svg
-            className="w-16 h-16 mx-auto mb-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M9.172 16.172a4 4 0 015.656 0M9.172 16.172L8 18m5.656-1.828L16 18M9.172 16.172a4 4 0 005.656 0" />
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M15 10a3 3 0 11-6 0 3 3 0 016 0z" />
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4v-3m0 0a6 6 0 00-12 0v3m0 0a6 6 0 0012 0" />
-          </svg>
-          <p className="text-lg">There are zero matches.</p>
+        <div className="flex flex-col text-center flex-1 justify-center items-center text-gray-pinkish font-semibold">
+          <p className="text-lg text-[14px]">There are zero matches.</p>
+          <p className="text-lg text-[14px]">Use the form to search for People or Movies.</p>
         </div>
       )}
     </div>
