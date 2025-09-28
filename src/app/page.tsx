@@ -36,7 +36,7 @@ export default function Home() {
             onSearch={handleSearch}
             loading={loading}
           />
-          <ResultsList results={searchResults} loading={loading} />
+          <ResultsList results={searchResults} loading={loading} searchType={searchType} />
         </div>
       </div>
     </>
