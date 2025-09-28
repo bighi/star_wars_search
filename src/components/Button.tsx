@@ -17,7 +17,7 @@ const Button: React.FC<ButtonProps> = ({
   loadingText = "Loading...",
   ...props
 }) => {
-  const baseClasses = "w-full font-bold rounded-[20px] p-[8px] text-white transition-all duration-300 transform border border-gray-soft";
+  const baseClasses = "w-full font-bold text-center rounded-[20px] p-[8px] text-white transition-all duration-300 transform border border-gray-soft";
 
   const stateClasses = props.disabled
     ? "bg-gray-pinkish cursor-not-allowed"

@@ -26,7 +26,7 @@ export default function Home() {
         <title>Star Wars Search</title>
       </Head>
 
-      <div className="flex flex-col md:flex-row gap-[30px] items-start w-full max-w-4xl bg-[#ededed]">
+      <div className="flex flex-col md:flex-row gap-[30px] items-start w-full max-w-5xl bg-[#ededed]">
         <SearchBox
           searchType={searchType}
           onSearchTypeChange={(e) => setSearchType(e.target.value as SearchType)}

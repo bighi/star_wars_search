@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { SearchType, type SearchResults } from "@/lib/sw_api";
 import BasicBox from "./BasicBox"
+import Button from "./Button"
 
 const ResultsList = ({ results, loading, searchType }: { results: SearchResults; loading: boolean; searchType: SearchType }) => {
   const router = useRouter();
@@ -27,14 +28,16 @@ const ResultsList = ({ results, loading, searchType }: { results: SearchResults;
       {results.length > 0 ? (
         <ul className="w-full space-y-4">
           {results.map((result) => (
-            <li key={result.uid} className="flex justify-between items-center">
-              <span className="text-left flex-1">{result.name}</span>
-              <button
-                onClick={() => router.push(`/${searchType}/${result.uid}`)}
-                className="px-4 py-2 font-semibold transition-all duration-300"
-              >
-                See details
-              </button>
+            <li key={result.uid} className="flex justify-between items-center m-0 py-[8px] border-b">
+              <span className="text-left flex-1 text-[15px] font-bold">{result.name}</span>
+              <div className="flex w-[134px]">
+                <Button
+                  as="link"
+                  href={`/${searchType}/${result.uid}`}
+                >
+                  SEE DETAILS
+                </Button>
+              </div>
             </li>
           ))}
         </ul>
