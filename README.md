@@ -20,16 +20,7 @@ Both services share a single SQLite file using a named Docker volume.
 docker compose build
 ```
 
-#### 2) Run migrations against the shared volume
-
-Run the following command to apply database migrations:
-
-```bash
-# Run migrations using the web image
- docker compose run -v star_wars_search_db_data:/data web npm run db:migrate
-```
-
-#### 3) Start the app and the background jobs
+#### 2) Start the app and the background jobs
 
 ```bash
 docker compose up
