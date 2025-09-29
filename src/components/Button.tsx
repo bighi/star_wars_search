@@ -14,7 +14,7 @@ const Button: React.FC<ButtonProps> = ({
   loading,
   children,
   className = "",
-  loadingText = "Loading...",
+  loadingText = "Searching...",
   ...props
 }) => {
   const baseClasses = "w-full font-bold text-center rounded-[20px] p-[8px] text-white transition-all duration-300 transform border border-gray-soft";
@@ -38,7 +38,7 @@ const Button: React.FC<ButtonProps> = ({
       className={`${baseClasses} ${stateClasses} ${className}`}
       {...props}
     >
-      {loading ? "Searching..." : children}
+      {loading ? loadingText : children}
     </button>
   );
 };

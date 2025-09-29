@@ -4,12 +4,12 @@ import Head from "next/head";
 import SearchBox from "@/components/SearchBox";
 import ResultsList from "@/components/ResultsList";
 import { useState } from "react";
-import Api, { type SearchType, type SearchResults } from "@/lib/sw_api";
+import Api, { type SearchType, type Movie, type Person } from "@/lib/sw_api";
 
 export default function Home() {
   const [searchType, setSearchType] = useState<SearchType>('people');
   const [query, setQuery] = useState('');
-  const [searchResults, setSearchResults] = useState<SearchResults>([]);
+  const [searchResults, setSearchResults] = useState<Person[] | Movie[]>([]);
   const [loading, setLoading] = useState(false);
 
   const handleSearch = async (e: React.FormEvent) => {
@@ -41,5 +41,3 @@ export default function Home() {
     </>
   );
 }
-
-

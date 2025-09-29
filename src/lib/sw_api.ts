@@ -28,7 +28,7 @@ type Movie = {
     // producer: string;
     // release_date: string;
     characters: string[];
-    character_details?: Array<any>; // Optional property to store character details
+    character_details?: Array<Person>; // Optional property to store character details
     // planets: string[];
     // starships: string[];
     // vehicles: string[];
@@ -48,7 +48,7 @@ const Api = {
 
   // Generalized fetch function, responsible for making API calls
   // and checking for errors.
-  fetch: async (url: string): Promise<any> => {
+  fetch: async (url: string): Promise<unknown> => {
     try {
       const response = await fetch(url);
 
@@ -57,7 +57,7 @@ const Api = {
       }
 
       const data = await response.json();
-      return data;
+      return data.result;
     } catch (error) {
       console.error(`Error fetching data from ${url}:`, error);
       throw error;
@@ -77,15 +77,15 @@ const Api = {
     console.log({ data })
 
     if (searchType === 'films') {
-      return data.result as Movie[];
+      return data as Movie[];
     } else {
-      return data.result as Person[];
+      return data as Person[];
     }
   },
 
   getPerson: async (url: string, includeMovies: boolean = false): Promise<Person> => {
     const data = await Api.fetch(url);
-    const person = data.result as Person;
+    const person = data as Person;
 
     if (includeMovies) {
       person.properties.films_details = await Promise.all(
@@ -100,7 +100,7 @@ const Api = {
 
   getMovie: async (url: string, getPeople: boolean = false): Promise<Movie> => {
     const data = await Api.fetch(url);
-    const movie = data.result as Movie;
+    const movie = data as Movie;
 
     if (getPeople) {
       movie.properties.character_details = await Promise.all(
