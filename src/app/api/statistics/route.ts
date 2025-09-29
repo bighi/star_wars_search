@@ -15,9 +15,11 @@ export async function GET() {
     return NextResponse.json({ error: "No statistics found" }, { status: 404 });
   }
 
-  // The topQueries are stored as a JSON string, so we need to parse it
+  console.log("Raw createdAt value:", latestStats[0].createdAt); // Debug log
   const result = {
-    ...latestStats[0],
+    id: latestStats[0].id,
+    test: "ok",
+    createdAt: new Date(Number(latestStats[0].createdAt)).toLocaleString(), // Ensure readable date
     topQueries: JSON.parse(latestStats[0].topQueries || "[]"),
   };
 

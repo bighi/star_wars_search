@@ -5,14 +5,24 @@ services:
       - "3000:3000"
     environment:
       NODE_ENV: production
+      SQLITE_PATH: /data/sqlite.db
     restart: unless-stopped
     volumes:
+      - db_data:/data
       - /app/node_modules
       - /app/.next
+    command: ["sh", "-c", "npm run db:migrate && npm start"]
   jobs:
     build: .
-    command: ["node", "--import", "tsx", "src/jobs/index.ts"]
+    command:
+      ["sh", "-c", "npm run db:migrate && node --import tsx src/jobs/index.ts"]
+    environment:
+      SQLITE_PATH: /data/sqlite.db
     restart: unless-stopped
     volumes:
       - .:/app
+      - db_data:/data
       - /app/node_modules
+
+volumes:
+  db_data:
