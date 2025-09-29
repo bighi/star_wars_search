@@ -72,14 +72,22 @@ const Api = {
     }
   },
 
-  search: async (searchType: SearchType, query: string): Promise<SearchResults> => {
-    const endpoint = `https://swapi.tech/api/${searchType}/?search=${query}`;
+  search: async (searchType: SearchType, query: string): Promise<Movie[] | Person[]> => {
+    let endpoint: string;
+
+    if (searchType === 'people') {
+      endpoint = `https://swapi.tech/api/people/?name=${query}`;
+    } else {
+      endpoint = `https://swapi.tech/api/films/?title=${query}`;
+    }
+
     const data = await Api.fetch(endpoint);
     console.log({ data })
+
     if (searchType === 'films') {
       return data.result as Movie[];
     } else {
-      return data.results as Person[];
+      return data.result as Person[];
     }
   },
 
