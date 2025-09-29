@@ -1,4 +1,4 @@
-type SearchType = "people" | "movies";
+type SearchType = "people" | "films";
 
 type SearchResult = {
   uid: string;
@@ -6,7 +6,7 @@ type SearchResult = {
   url: string;
 };
 
-type SearchResults = SearchResult[];
+export type SearchResults = SearchResult[] | Movie[];
 
 type Person = {
   uid: string;
@@ -15,11 +15,11 @@ type Person = {
     height: string;
     mass: string;
     gender: string;
-    skin_color: string;
+    // skin_color: string;
     hair_color: string;
     eye_color: string;
     birth_year: string;
-    homeworld: string;
+    // homeworld: string;
     films: string[];
     films_details?: Array<Movie>;
     url: string;
@@ -75,7 +75,12 @@ const Api = {
   search: async (searchType: SearchType, query: string): Promise<SearchResults> => {
     const endpoint = `https://swapi.tech/api/${searchType}/?search=${query}`;
     const data = await Api.fetch(endpoint);
-    return data.results as SearchResults;
+    console.log({ data })
+    if (searchType === 'films') {
+      return data.result as Movie[];
+    } else {
+      return data.results as Person[];
+    }
   },
 
   getPerson: async (url: string, includeMovies: boolean = false): Promise<Person> => {
@@ -110,4 +115,4 @@ const Api = {
 };
 
 export default Api;
-export type { SearchType, SearchResult, SearchResults, Person, Movie };
+export type { SearchType, SearchResults, Person, Movie };

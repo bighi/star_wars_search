@@ -32,7 +32,7 @@ export default async function PersonPage({ params }: { params: { id: string } })
           <ul className="list-none">
             {person.properties.films_details?.map((film) => (
               <li key={film.uid}>
-                <a href={`/movie/${film.uid}`} className="text-blue-500 hover:underline">
+                <a href={`/films/${film.uid}`} className="text-blue-500 hover:underline">
                   {film.properties.title}
                 </a>
               </li>

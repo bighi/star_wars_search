@@ -35,8 +35,8 @@ const SearchBox: React.FC<SearchBoxProps> = ({ searchType, onSearchTypeChange, q
             <input
               type="radio"
               name="searchType"
-              value="movies"
-              checked={searchType === 'movies'}
+              value="films"
+              checked={searchType === 'films'}
               onChange={onSearchTypeChange}
             />
             <span>Movies</span>
