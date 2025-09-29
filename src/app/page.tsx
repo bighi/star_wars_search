@@ -12,9 +12,19 @@ export default function Home() {
   const [searchResults, setSearchResults] = useState<Person[] | Movie[]>([]);
   const [loading, setLoading] = useState(false);
 
+  // Call our internal API to save the search query
+  const saveQueryToDatabase = async (searchType: SearchType, query: string) => {
+    await fetch("/api/save-search", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ searchType, query }),
+    });
+  }
+
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    saveQueryToDatabase(searchType, query);
     const searchResults = await Api.search(searchType, query);
     setSearchResults(searchResults);
     setLoading(false);
