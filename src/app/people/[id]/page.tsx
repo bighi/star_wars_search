@@ -5,7 +5,7 @@ import Api from "@/lib/sw_api";
 import { type Person } from "@/lib/sw_api";
 
 export default async function PersonPage({ params }: { params: { id: string } }) {
-  const { id } = params;
+  const { id } = await params;
   const person: Person = await Api.getPerson(Api.personUrl(id), true);
 
   return (
