@@ -8,12 +8,10 @@ import Button from "./Button"
 const ResultsList = ({ results, loading, searchType }: { results: SearchResults; loading: boolean; searchType: SearchType }) => {
   const router = useRouter();
 
-  const header = <h2 className="text-xl font-bold text-[18px] w-full pb-[10px] border-b-[0.5px]">Results</h2>;
-
   if (loading) {
     return (
       <BasicBox className="min-h-[635px]">
-        {header}
+        <h2 className="text-xl font-bold text-[18px] w-full pb-[10px] border-b-[0.5px]">Results</h2>;
         <div className="flex flex-col flex-1 justify-center text-gray-pinkish font-semibold">
           <p className="text-[14px] self-center">Searching...</p>
         </div>
@@ -23,7 +21,7 @@ const ResultsList = ({ results, loading, searchType }: { results: SearchResults;
 
   return (
     <BasicBox className="min-h-[635px]">
-      {header}
+      <h2 className="text-xl font-bold text-[18px] w-full pb-[10px] border-b-[0.5px]">Results</h2>
 
       {results.length > 0 ? (
         <ul className="w-full space-y-4">
@@ -31,10 +29,7 @@ const ResultsList = ({ results, loading, searchType }: { results: SearchResults;
             <li key={result.uid} className="flex justify-between items-center m-0 py-[8px] border-b">
               <span className="text-left flex-1 text-[15px] font-bold">{result.name}</span>
               <div className="flex w-[134px]">
-                <Button
-                  as="link"
-                  href={`/${searchType}/${result.uid}`}
-                >
+                <Button as="link" href={`/${searchType}/${result.uid}`}>
                   SEE DETAILS
                 </Button>
               </div>
