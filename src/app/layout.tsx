@@ -24,7 +24,7 @@ export default function RootLayout({
             Star Wars Search
           </h1>
         </nav>
-        <main className="flex flex-row flex-1 p-[30px] justify-center bg-[#ededed] text-black">
+        <main className="flex flex-row flex-1 p-[30px] items-start justify-center bg-[#ededed] text-black">
           {children}
         </main>
       </body>
