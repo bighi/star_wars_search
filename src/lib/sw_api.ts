@@ -1,13 +1,5 @@
 type SearchType = "people" | "films";
 
-type SearchResult = {
-  uid: string;
-  name: string;
-  url: string;
-};
-
-export type SearchResults = SearchResult[] | Movie[];
-
 type Person = {
   uid: string;
   properties: {
@@ -123,4 +115,4 @@ const Api = {
 };
 
 export default Api;
-export type { SearchType, SearchResults, Person, Movie };
+export type { SearchType, Person, Movie };
