@@ -7,8 +7,11 @@ const bree = new Bree({
     {
       name: "statistics",
       interval: "5m",
-      // Provide the full path to the .ts file
-      path: path.join(__dirname, "statistics.ts"),
+      timeout: 0, // Run immediately on startup
+      path: path.join(__dirname, "worker.js"), // Use custom worker script
+      worker: {
+        workerData: { path: path.join(__dirname, "statistics.ts") }, // Pass the TypeScript file path to the worker
+      },
     },
   ],
 });

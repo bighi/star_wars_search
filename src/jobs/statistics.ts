@@ -21,7 +21,13 @@ export default async function runStatisticsJob() {
   console.log("Statistics job completed at:", new Date().toISOString());
 }
 
-// If run directly, execute the job
-if (require.main === module) {
-  runStatisticsJob().catch(console.error);
-}
+// Always execute when this file is run (Bree worker spawns a separate process)
+runStatisticsJob()
+  .then(() => {
+    // Explicitly exit to signal completion to the worker
+    process.exit(0);
+  })
+  .catch((err) => {
+    console.error("Statistics job failed:", err);
+    process.exit(1);
+  });
