@@ -1,36 +1,79 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Star Wars Search – Docker Guide
 
-## Getting Started
+This app is a Next.js + TypeScript project with a SQLite database (via Drizzle ORM) and a background job (via Bree) that periodically computes search statistics.
 
-First, run the development server:
+The recommended way to run it is via Docker Compose, which starts two services:
+- web: The Next.js server (port 3000)
+- jobs: The statistics scheduler (runs immediately and every 5 minutes)
+
+Both services share a single SQLite file using a named Docker volume.
+
+### Prerequisites
+- Docker Desktop 4.x+
+- Docker Compose v2
+
+### One-time setup and run
+
+#### 1) Build images
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+docker compose build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+#### 2) Run migrations against the shared volume
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Run the following command to apply database migrations:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+# Run migrations using the web image
+ docker compose run -v star_wars_search_db_data:/data web npm run db:migrate
+```
 
-## Learn More
+#### 3) Start the app and the background jobs
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+docker compose up
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Now open http://localhost:3000.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Useful endpoints
 
-## Deploy on Vercel
+#### Recent Searches
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+URL: http://localhost:3000/api/recent-searches
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Returns the last 5 searches (for testing purposes).
+
+#### Statistics
+
+URL: http://localhost:3000/api/statistics
+
+Returns the latest saved statistics, including the top 5 search queries.
+
+### Logs and troubleshooting
+- Web logs and job logs are shown in the same `docker compose up` terminal.
+- You should see messages like:
+	- `[migrate] Using DB path: /data/sqlite.db`
+	- `[migrate] Migrations applied successfully.`
+	- `[worker] launching tsx for /app/src/jobs/statistics.ts`
+	- `Statistics job started at: …`
+	- `Statistics job completed at: …`
+
+If you see `no such table: searches`:
+1. Ensure migrations ran against the shared volume (see logs).
+2. Re-run the migration step against the named volume:
+	 ```bash
+	 docker compose run -v star_wars_search_db_data:/data web npm run db:migrate
+	 ```
+3. Restart the stack:
+	 ```bash
+	 docker compose up
+	 ```
+
+### Cleaning everything
+```bash
+docker compose down --rmi all --volumes --remove-orphans
+```
+
+This removes containers, images, and the named volume (wipes DB data).
