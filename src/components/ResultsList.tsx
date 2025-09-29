@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { SearchType, type SearchResults } from "@/lib/sw_api";
 import BasicBox from "./BasicBox"
 import Button from "./Button"
+import H2 from "./H2"
 
 const ResultsList = ({ results, loading, searchType }: { results: SearchResults; loading: boolean; searchType: SearchType }) => {
   const router = useRouter();
@@ -11,7 +12,7 @@ const ResultsList = ({ results, loading, searchType }: { results: SearchResults;
   if (loading) {
     return (
       <BasicBox className="min-h-[635px]">
-        <h2 className="text-xl font-bold text-[18px] w-full pb-[10px] border-b-[0.5px]">Results</h2>;
+        <H2>Results</H2>
         <div className="flex flex-col flex-1 justify-center text-gray-pinkish font-semibold">
           <p className="text-[14px] self-center">Searching...</p>
         </div>
@@ -21,7 +22,7 @@ const ResultsList = ({ results, loading, searchType }: { results: SearchResults;
 
   return (
     <BasicBox className="min-h-[635px]">
-      <h2 className="text-xl font-bold text-[18px] w-full pb-[10px] border-b-[0.5px]">Results</h2>
+      <H2 className="mb-0">Results</H2>
 
       {results.length > 0 ? (
         <ul className="w-full space-y-4">
