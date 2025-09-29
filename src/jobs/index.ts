@@ -7,6 +7,8 @@ const bree = new Bree({
     {
       name: "statistics",
       interval: "5m",
+      // Provide the full path to the .ts file
+      path: path.join(__dirname, "statistics.ts"),
     },
   ],
 });

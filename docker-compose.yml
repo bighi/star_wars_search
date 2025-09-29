@@ -7,11 +7,11 @@ services:
       NODE_ENV: production
     restart: unless-stopped
     volumes:
-      - .:/app
       - /app/node_modules
+      - /app/.next
   jobs:
     build: .
-    command: ["node", "src/jobs/index.ts"]
+    command: ["node", "--import", "tsx", "src/jobs/index.ts"]
     restart: unless-stopped
     volumes:
       - .:/app
