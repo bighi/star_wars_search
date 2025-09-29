@@ -16,7 +16,7 @@ interface SearchBoxProps {
 const SearchBox: React.FC<SearchBoxProps> = ({ searchType, onSearchTypeChange, query, onQueryChange, onSearch, loading }) => {
   return (
     <BasicBox className="gap-[20px]">
-      <h2>What are you searching for?</h2>
+      <p className="text-[14px]">What are you searching for?</p>
 
       <form onSubmit={onSearch} className="space-y-6">
         <div className="flex items-center gap-[30px] font-bold">
